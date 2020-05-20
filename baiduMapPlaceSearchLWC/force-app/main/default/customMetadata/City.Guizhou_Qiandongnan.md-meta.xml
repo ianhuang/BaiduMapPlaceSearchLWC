@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>黔东南苗族侗族自治州</label>
+    <protected>true</protected>
+    <values>
+        <field>Province__c</field>
+        <value xsi:type="xsd:string">贵州省</value>
+    </values>
+    <values>
+        <field>Sequence__c</field>
+        <value xsi:type="xsd:double">11.0</value>
+    </values>
+</CustomMetadata>

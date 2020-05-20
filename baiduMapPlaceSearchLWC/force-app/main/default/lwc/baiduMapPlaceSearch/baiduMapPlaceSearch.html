@@ -1,0 +1,117 @@
+<template>
+    <div class="slds-box slds-theme_default" style="width:100%">
+    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+       <div class="slds-item">
+        <lightning-icon icon-name={getIconName} size="small"></lightning-icon>
+        &nbsp;{label.title}&nbsp;
+        <lightning-icon icon-name="utility:search" size="x-small" alternative-text="Lookup" onclick={toggleInputBlock}></lightning-icon>
+  
+        <lightning-spinner variant="brand" size="medium" class="slds-hide" alternative-text="Saving"></lightning-spinner>
+         <div class="slds-grid slds-wrap">
+             <div class="slds-col slds-wrap slds-size--1-of-1 slds-large-size--1-of-1">
+                <template if:true={place}>
+                   <template if:true={showMapLink}>
+                      <a href={markerUrl} target="_blank">{place.name}</a>
+                   </template>
+                   <template if:false={showMapLink}>
+                      {place.name}
+                   </template>
+                </template>
+             </div>
+             <div class="slds-col slds-wrap slds-size--1-of-1 slds-large-size--1-of-1">
+               <template if:true={place}>
+                 <template if:true={showMapLink}>
+                    <a href={geocoderUrl} target="_blank">{place.province}{place.city}{place.address}</a>
+                 </template>
+                 <template if:false={showMapLink}>
+                    {place.fullAddress}
+                 </template>
+               </template>
+            </div>
+         </div>
+  
+        <template if:true={showInputBlock}> 
+          <div data-id="inputBlock" class="slds-show" style="width:100%">
+            <div class="slds-size_full">
+              <div class="slds-form slds-grid slds-wrap slds-box">
+                <template if:true={place}>
+                  <lightning-input name="name" type="search" 
+                                   label={label.place} value='{place.name}' 
+                                   class="slds-col--padded slds-size--1-of-1" 
+                                   placeholder={label.searchPlaceholder}
+                                   onkeypress={nameKeyPress}
+                                   onchange={onChange}>
+                  </lightning-input>
+
+                  <!-- search results, initially hidden -->
+                  <template if:true={showSearchResults}>
+                      <div role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+                          <div if:true={loading}>
+                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        </div>                        
+                        &nbsp;<lightning-icon icon-name="utility:close" title="Close" 
+                                              alternative-text="Close" size="xx-small" 
+                                              onclick={closeSearchResult}></lightning-icon>
+                        <template for:each={searchResults} for:item="bus">
+                            <li key={bus.uid} role="presentation" class="slds-lookup__item">
+                                <a key={bus.uid} role="option" onclick={onResultSelect}
+                                  data-name={bus.name} data-province={bus.province} 
+                                  data-city={bus.city} data-address={bus.address} 
+                                  data-area={bus.area} data-telephone={bus.telephone}
+                                  data-lat={bus.location.lat} data-lng={bus.location.lng}>
+                                    {bus.name} - {bus.address}
+                                </a>
+                            </li>
+                          </template>
+                        </ul>
+                      </div>
+                  </template>
+                  <!--template if:true={showNoResultsFound}>
+                    <div role="listbox">
+                      <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid" role="presentation">
+                      &nbsp;<lightning-icon icon-name="utility:close" title="Close" 
+                                            alternative-text="Close" size="xx-small" 
+                                            onclick={closeSearchResult}></lightning-icon>
+                         <li role="presentation" class="slds-lookup__item">No results found for '{searchText}'</li>          
+                      </ul>
+                    </div>
+                  </template-->
+
+                  <lightning-input name="country" label={label.country} value='{place.country}' class="slds-col--padded slds-size--1-of-3" onchange={onChange}></lightning-input>
+                  <div class="slds-col--padded slds-size--1-of-3">
+                    <lightning-combobox name="province"
+                                label={label.province}
+                                value={place.province}
+                                options={provinces}
+                                onchange={onChange}>
+                    </lightning-combobox>
+                  </div>
+                  <div class="slds-col--padded slds-size--1-of-3">
+                    <lightning-combobox name="city"
+                                label={label.city}
+                                value={place.city}
+                                options={cities}
+                                onchange={onChange}>
+                    </lightning-combobox>
+                  </div>                    
+
+                  <lightning-input name="address" label={label.street} value='{place.address}' class="slds-col--padded slds-size--1-of-1" onchange={onChange}></lightning-input>
+                  <lightning-input name="postcode" label={label.postcode} value='{place.postcode}' class="slds-col--padded slds-size--1-of-3" onchange={onChange}></lightning-input>
+                  <lightning-input name="phone" label={label.phone} value='{place.telephone}' class="slds-col--padded slds-size--2-of-3" onchange={onChange}></lightning-input>
+                  
+                </template>
+            </div>
+          </div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="slds-modal__footer">                
+          <lightning-button variant="neutral" label="Cancel" onclick={hideInputBlock}></lightning-button>&nbsp;
+          <lightning-button variant="brand" label="Save" onclick={saveChanges} disabled={disbaleRecordUpdate}></lightning-button>
+        </div>   
+       </template>
+  
+      </div>
+    </div>
+  </div>  
+   </template>
