@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2020, Salesforce Labs
+Copyright (c) 2020, Ian Huang
 
 All rights reserved.
 
