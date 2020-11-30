@@ -2,5 +2,5 @@
 <CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
     <label>Baidu Map Search Setting</label>
     <pluralLabel>Baidu Map Search Settings</pluralLabel>
-    <visibility>Public</visibility>
+    <visibility>Protected</visibility>
 </CustomObject>
