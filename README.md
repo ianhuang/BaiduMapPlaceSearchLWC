@@ -1,5 +1,5 @@
 # Baidu Map Place Search Lightning Web Component（LWC） 
-# 百度地图兴趣点搜索Salesforce LWC 组件
+百度地图兴趣点搜索Salesforce LWC 组件
 
 Baidu Map Place Search LWC component provides POI (point of interest) search function for Mainland China, Hong Kong, Macau and Taiwan to Account and Lead object lightning record page.
 
